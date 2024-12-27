@@ -1,0 +1,163 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Multi Page Navigation</title>
+    <style>
+        body {
+            margin: 0;
+            padding: 0;
+            font-family: Arial, sans-serif;
+            background: url('background.jpg') no-repeat center center fixed;
+            background-size: cover;
+            color: white;
+            text-align: center;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            height: 100vh;
+            overflow: hidden;
+            animation: shakeClouds 5s infinite ease-in-out;
+        }
+        .container {
+            text-align: center;
+            position: relative;
+            z-index: 2;
+        }
+        h1 {
+            font-size: 2.5rem;
+            margin-bottom: 20px;
+            animation: fadeIn 1.5s ease-in-out;
+        }
+        button {
+            padding: 15px 30px;
+            margin: 10px;
+            font-size: 22px;
+            border: none;
+            cursor: pointer;
+            background-color: rgba(0, 0, 0, 0.6);
+            color: white;
+            border-radius: 32px;
+            transition: all 0.3s ease;
+            animation: fadeIn 2s ease-in-out;
+        }
+        button:hover {
+            background-color: rgba(255, 255, 255, 0.2);
+            transform: scale(1.1);
+        }
+        .stars {
+            position: absolute;
+            width: 100%;
+            height: 100%;
+            top: 0;
+            left: 0;
+            z-index: 1;
+            overflow: hidden;
+        }
+        .star {
+            position: absolute;
+            width: 4px;
+            height: 4px;
+            background: white;
+            border-radius: 50%;
+            animation: twinkle 3s infinite ease-in-out;
+        }
+        @keyframes twinkle {
+            0%, 100% {
+                opacity: 0;
+            }
+            50% {
+                opacity: 1;
+            }
+        }
+        @keyframes fadeIn {
+            0% {
+                opacity: 0;
+                transform: translateY(-20px);
+            }
+            100% {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+        @keyframes shakeClouds {
+            0%, 100% {
+                background-position: center center;
+            }
+            25% {
+                background-position: center calc(50% - 5px);
+            }
+            50% {
+                background-position: calc(50% - 5px) center;
+            }
+            75% {
+                background-position: center calc(50% + 5px);
+            }
+        }
+    </style>
+</head>
+<body>
+    <div class="stars" id="stars"></div>
+
+    <!-- Home Page -->
+    <div id="home" class="container" style="display: block;">
+        <h1>Are You sure won't be angry with me?</h1>
+        <button onclick="navigate('sure')">Yes</button>
+        <button onclick="navigate('no')">No</button>
+    </div>
+
+    <!-- No Page -->
+    <div id="no" class="container" style="display: none;">
+        <h1>Close The tab!</h1>
+    </div>
+
+    <!-- Sure Page -->
+    <div id="sure" class="container" style="display: none;">
+        <h1>Are you sure 100%?</h1>
+        <button onclick="navigate('askout')">Yes</button>
+        <button onclick="navigate('no')">No</button>
+    </div>
+
+    <!-- Ask Out Page -->
+    <div id="askout" class="container" style="display: none;">
+        <h1>I feel butterflies around you fr.</h1>
+        <p><button onclick="navigate('agree')">Here's something I made for you</button></p>
+    </div>
+
+    <!-- Agree Page -->
+    <div id="agree" class="container" style="display: none;">
+        <h1>Do you agree with the above page before proceeding?</h1>
+        <button onclick="window.location.href='https://malikmadu.github.io/34234v-234-234-234/'">Yes</button>
+        <button onclick="navigate('close')">No</button>
+    </div>
+
+    <!-- Close Page -->
+    <div id="close" class="container" style="display: none;">
+        <h1>Close The tab!</h1>
+    </div>
+
+    <script>
+        function navigate(page) {
+            const pages = ['home', 'no', 'sure', 'askout', 'agree', 'close'];
+            pages.forEach(p => document.getElementById(p).style.display = 'none');
+            document.getElementById(page).style.display = 'block';
+        }
+
+        function createStars() {
+            const starContainer = document.getElementById('stars');
+            for (let i = 0; i < 200; i++) {
+                const star = document.createElement('div');
+                star.classList.add('star');
+                star.style.left = `${Math.random() * 100}%`;
+                star.style.top = `${Math.random() * 100}%`;
+                star.style.animationDuration = `${Math.random() * 3 + 2}s`;
+                star.style.animationDelay = `${Math.random() * 3}s`;
+                starContainer.appendChild(star);
+            }
+        }
+
+        createStars();
+    </script>
+</body>
+</html>
