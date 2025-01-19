@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Hi Crush</title>
+    <title>Hi dear</title>
     <style>
         body {
             margin: 0;
@@ -28,6 +28,9 @@
         h1 {
             font-size: 2.5rem;
             margin-bottom: 20px;
+            animation: fadeIn 1.5s ease-in-out;
+        }
+        h4, h6 {
             animation: fadeIn 1.5s ease-in-out;
         }
         button {
@@ -63,12 +66,32 @@
             border-radius: 50%;
             animation: twinkle 3s infinite ease-in-out;
         }
+        .sparkle {
+            position: absolute;
+            width: 6px;
+            height: 6px;
+            background: pink;
+            border-radius: 50%;
+            box-shadow: 0 0 8px pink;
+            pointer-events: none;
+            animation: sparkle 0.8s ease-out forwards;
+        }
         @keyframes twinkle {
             0%, 100% {
                 opacity: 0;
             }
             50% {
                 opacity: 1;
+            }
+        }
+        @keyframes sparkle {
+            0% {
+                opacity: 1;
+                transform: scale(1);
+            }
+            100% {
+                opacity: 0;
+                transform: scale(2);
             }
         }
         @keyframes fadeIn {
@@ -79,6 +102,16 @@
             100% {
                 opacity: 1;
                 transform: translateY(0);
+            }
+        }
+        @keyframes fadeDown {
+            0% {
+                opacity: 1;
+                transform: translateY(0);
+            }
+            100% {
+                opacity: 0;
+                transform: translateY(20px);
             }
         }
         @keyframes shakeClouds {
@@ -121,13 +154,15 @@
 
     <!-- Ask Out Page -->
     <div id="askout" class="container" style="display: none;">
-        <h1>I feel butterflies around you fr.</h1>
+        <h1>I have a Crush on you fr.</h1>
         <p><button onclick="navigate('agree')">Here's something I made for you</button></p>
     </div>
 
     <!-- Agree Page -->
     <div id="agree" class="container" style="display: none;">
         <h1>Do you agree with the above page before proceeding?</h1>
+        <h4>Send me the Code to agree and activate the next page. The page will activate 30 seconds after the code is sent.</h4>
+        <h6>CODE 4325-7002-3215</h6>
         <button onclick="window.location.href='https://malikmadu.github.io/34234v-234-234-234/'">Yes</button>
         <button onclick="navigate('close')">No</button>
     </div>
@@ -140,8 +175,17 @@
     <script>
         function navigate(page) {
             const pages = ['home', 'no', 'sure', 'askout', 'agree', 'close'];
-            pages.forEach(p => document.getElementById(p).style.display = 'none');
-            document.getElementById(page).style.display = 'block';
+            const currentPage = document.querySelector('.container[style*="display: block;"]');
+            // Apply fade-down animation to current page elements
+            const elements = currentPage.querySelectorAll('h1, h4, h6, button');
+            elements.forEach(element => {
+                element.style.animation = 'fadeDown 1s forwards'; // Trigger fade-down animation
+            });
+            // Wait for animation to complete before switching page
+            setTimeout(() => {
+                pages.forEach(p => document.getElementById(p).style.display = 'none');
+                document.getElementById(page).style.display = 'block';
+            }, 1000); // Adjust the timeout duration to match the animation time
         }
 
         function createStars() {
@@ -156,6 +200,20 @@
                 starContainer.appendChild(star);
             }
         }
+
+        function createSparkle(x, y) {
+            const sparkle = document.createElement('div');
+            sparkle.classList.add('sparkle');
+            sparkle.style.left = `${x}px`;
+            sparkle.style.top = `${y}px`;
+            document.body.appendChild(sparkle);
+
+            setTimeout(() => sparkle.remove(), 800); // Remove after animation
+        }
+
+        document.addEventListener('mousemove', (e) => {
+            createSparkle(e.pageX, e.pageY);
+        });
 
         createStars();
     </script>
